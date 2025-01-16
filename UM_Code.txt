@@ -1,0 +1,156 @@
+@startuml
+package game {
+
+  class Game {
+    - boolean moving
+    - boolean endgame
+    - boolean can_move
+    - int current_frame
+    - int scenex
+    - int sceney
+    - int x_pos
+    - boolean inventory_open
+    - Inventory inventory
+    - Room current_room
+    - boolean can_change_inv
+    - boolean code_entered
+    - ArrayList<Integer> code
+    - ArrayList<Integer> entered_code
+    - int code_pieces
+    + Game(Room, ArrayList<Integer>, boolean)
+    + void game_begin()
+    + void walkAnimation(boolean)
+    + void stopWalk()
+    + void setImage(String)
+    + void updateBackground()
+    + void roomTrasition()
+    + void codeVerify()
+    + boolean isCodeCorrect()
+    + void returnToMenu()
+  }
+
+  class Save {
+    - final String FILE_NAME
+    - boolean isfirst
+    + void saveData(int, ArrayList<Integer>)
+    + int loadRoom()
+    + ArrayList<Integer> loadCode(boolean)
+    + void resetData()
+  }
+
+  class Program {
+    - Room room
+    - ArrayList<Integer> code
+    - int[] collected_code
+    + main(String[])
+    + void start()
+    + void gameMenu()
+    + void startGame(Room, boolean)
+  }
+
+  class Code {
+    - final String IMAGE_PATH
+    - ArrayList<Integer> code
+    - int[] rooms
+    - int[] empty_rooms
+    + Code(ArrayList<Integer>, boolean)
+    + void loadVerifeir()
+    + void setCode()
+    + void createImageView(int)
+    + void getImageView(int)
+  }
+
+  class Room {
+    - int number
+    - String backgroundImage
+    - Map<String, Room> connections
+    + Room(int, String)
+    + void connect(String, Room)
+    + Room getDirection(String)
+    + int getNumber()
+  }
+
+  class Inventory {
+    + void openInventory()
+  }
+
+  class Virus {
+    - int x_pos
+    - int y_pos = 590 / 2 - 130
+    - boolean is_moving = false
+    - boolean is_chasing = false
+    - Timeline move_animation
+    - String[] walk_frames
+    - ImageView imageView
+    - Random rand
+    - int current_frame
+    - Room enemy_room
+    - int spawn_room
+    - boolean isleft = false
+    - double speed = 0
+    - int diff_room = -1
+    - Game game
+    - boolean chase_left
+    - boolean can_move = false
+    - int num_rand
+    - Game_Map game_map
+    - boolean swap_move = true
+    - int change_time = 0
+    - Jumpscare jumpscare
+    - Sound sound
+    + Virus(Game)
+    + ImageView getImageView()
+    + void startVirus()
+    + void moveRandom()
+    + void chasePlayer()
+    + void changeRoom()
+    + void setImage(String)
+    + void startChase()
+    + int getEnemyNumber()
+    + boolean sameRoom()
+    + boolean sameDirection()
+  }
+
+  class Game_Map {
+    - static Map<Integer, Room> rooms
+    - static Room current_room
+    - static Room enemy_room
+    + Game_Map()
+    - void initializeRooms()
+    + static Room getCurrentRoom(boolean)
+    + void setCurrentRoom(int, boolean)
+    + static Room moveRoom(String, boolean)
+  }
+
+  class Jumpscare {
+    - Canvas canvas
+    - GraphicsContext gc
+    - String[] jumpscares
+    - int current_frame
+    - Timeline jumpscare_animation
+    + Jumpscare(Stage)
+    + void showJumpscare(Game)
+    + void setImage(String)
+    + Canvas getCanvas()
+  }
+
+  class Sound {
+    + static synchronized void play(String)
+  }
+
+  ' Relationships
+  Game "1" *-- "1" Save 
+  Game "1" *-- "1" Inventory
+  Game "1" *-- "1" Virus
+  Game "1" *-- "1" Code
+  Game "1" *-- "1" Room
+  Game "1" *-- "1" Jumpscare
+  Program "1" *-- "1" Room
+  Program "1" *-- "1" Save
+  Code "1" *-- "1" Game_Map
+  Game_Map "1" *-- "1" Room
+  Virus "1" *-- "1" Game_Map
+  Jumpscare "1" *-- "1" Game_Map
+  Sound "1" *-- "1" Game_Map
+}
+@enduml

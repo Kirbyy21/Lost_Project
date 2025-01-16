@@ -1,0 +1,5 @@
+javac --module-path lib/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml -d out src/game/*.java
+java --module-path lib/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml -cp out game.Program
+
+javadoc -d Doc --module-path "F:\SCUOLA\I2AC\M226\Lost\lib\javafx-sdk\lib" --add-modules javafx.controls,javafx.fxml *.java
+

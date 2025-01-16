@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "java",
+        "name": "Launch MemoryGame",
+        "request": "launch",
+        "mainClass": "game.MemoryGame",
+        "vmArgs": "--module-path ../lib/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml"
+      }
+    ]
+}
+  
